@@ -9,15 +9,16 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-find_package(RapidJSON REQUIRED)
+# Include RapidJSON from the submodule directory
+set(RAPIDJSON_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/extern/rapidjson/include")
 include_directories(${RAPIDJSON_INCLUDE_DIRS})
 
 file(GLOB SOURCES "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 
+# Set linker flags for static linking
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
 add_executable(QuestionCreator ${SOURCES})
-target_link_libraries(QuestionCreator ${RAPIDJSON_LIBRARIES})
 
 # Apply Release mode specific settings
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
